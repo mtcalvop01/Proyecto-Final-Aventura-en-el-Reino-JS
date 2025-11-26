@@ -1,11 +1,11 @@
-import { vidaMax } from './constants/constants.js';
-
+// Enemigo.js
 export class Enemigo {
-    constructor(nombre, avatar, nivelAtaque, vidaMax){
+    constructor(nombre, tipo = "Enemigo", nivelAtaque, vidaMax){
         this.nombre = nombre;
-        this.avatar = avatar;
-        this.nivelAtaque = nivelAtaque;
+        this.tipo = tipo;        // tipo visible en la escena
+        this.ataque = nivelAtaque; // renombramos para que sea consistente
         this.vidaMax = vidaMax;
         this.vida = this.vidaMax;
     }
 }
+
