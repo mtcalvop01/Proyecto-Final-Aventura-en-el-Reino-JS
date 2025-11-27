@@ -30,17 +30,17 @@ function escenaCrearJugador() {
   contenedorEscena.className = "escena1"
   contenedorEscena.innerHTML = `
   <div class="cabeceraJugador">
-    <p id="nombreJugador">Cazador</p>
-    <div id="imgJugador">
+    <p class="nombreJugador">Cazador</p>
+    <div class="imgJugador">
         <img src="./Imagenes/imgJugador.svg">
     </div>
   </div>
 
-  <div id="caracteristicas">
-    <p id="ataque">Ataque: 0</p>
-    <p id="defensa">Defensa: 0</p>
-    <p id="vida">Vida: 100</p>
-    <p id="puntos">Puntos: 0</p>
+  <div class="caracteristicas">
+    <p class="ataque">Ataque: 0</p>
+    <p class="defensa">Defensa: 0</p>
+    <p class="vida">Vida: 100</p>
+    <p class="puntos">Puntos: 0</p>
   </div>
 
   <div id="boton">
@@ -66,11 +66,9 @@ function escenaMercado() {
     const contenedorEscena = document.createElement('div');
     contenedorEscena.className = "escena2"
     contenedorEscena.innerHTML = `
-    <div class="cabeceraMercado">
-        <p id=nombreMercado>Mercado Negro</p>
-    </div>
-    
-    
+        <div class="cabeceraMercado">
+            <p id="nombreMercado">Mercado Negro</p>
+        </div>
     `;
 
     const descuentosPorRareza = {
@@ -81,21 +79,23 @@ function escenaMercado() {
 
     const productosSeleccionados = new Set();
 
+    const contenedorProductos = document.createElement("div");
+    contenedorProductos.className = "contenedor-productos"; 
+
     mercado.productos.forEach((productoActual, indiceProducto) => {
         const descuentoActual = descuentosPorRareza[productoActual.rareza];
-        productoActual.aplicarDescuento(descuentoActual); // aplica descuento en la misma instancia
+        productoActual.aplicarDescuento(descuentoActual); 
 
         const tarjetaProductoDiv = document.createElement('div');
         tarjetaProductoDiv.className = "producto";
         tarjetaProductoDiv.innerHTML = `
-        <div id="mercado">
-  <img src="${productoActual.imagenURL}" alt="${productoActual.nombre}">
-  <p>${productoActual.presentar()}</p>
-  <p>${productoActual.precio} €</p>
-  <button id="botonSeleccionarProducto${indiceProducto}">
-    ${productosSeleccionados.has(productoActual) ? "Retirar" : "Añadir"}
-  </button>
-`;
+            <img src="${productoActual.imagenURL}" alt="${productoActual.nombre}">
+            <p>${productoActual.presentar()}</p>
+            <p>${productoActual.precio} €</p>
+            <button id="botonSeleccionarProducto${indiceProducto}">
+                ${productosSeleccionados.has(productoActual) ? "Retirar" : "Añadir"}
+            </button>
+        `;
 
 
         const boton = tarjetaProductoDiv.querySelector(`#botonSeleccionarProducto${indiceProducto}`);
@@ -109,8 +109,12 @@ function escenaMercado() {
             }
         });
 
-        contenedorEscena.append(tarjetaProductoDiv);
+        // Añadir tarjeta al contenedor de productos
+        contenedorProductos.appendChild(tarjetaProductoDiv);
     });
+
+    // Añadir contenedor de productos a la escena
+    contenedorEscena.appendChild(contenedorProductos);
 
     const botonConfirmarCompra = document.createElement('button');
     botonConfirmarCompra.className = "btnCompra"
@@ -120,55 +124,102 @@ function escenaMercado() {
         cambiarEscena(3);
     });
 
-    contenedorEscena.append(botonConfirmarCompra);
+    contenedorEscena.appendChild(botonConfirmarCompra);
     app.append(contenedorEscena);
 }
+
 
 
 
 // ========== ESCENA 3 ==========
 function escenaEstadoJugador() {
   const contenedorEscena = document.createElement('div');
+  contenedorEscena.className = "escena3";
+
   contenedorEscena.innerHTML = `
-    <h2>🎒 Escena 3: Estado del jugador</h2>
-    <pre>${jugadorActual.mostrarJugador()}</pre>
-    <button id="botonContinuarEscena4">Continuar</button>
+    <div class="cabeceraJugador">
+      <p class="nombreJugador">${jugadorActual.nombre}</p>
+      <div class="imgJugador">
+        <img src="./Imagenes/imgJugador.svg">
+      </div>
+    </div>
+
+    <div class="caracteristicas">
+      <p class="ataque">Ataque: ${jugadorActual.ataqueTotal}</p>
+      <p class="defensa">Defensa: ${jugadorActual.defensaTotal}</p>
+      <p class="vida">Vida: ${jugadorActual.vida}</p>
+      <p class="puntos">Puntos: ${jugadorActual.puntos}</p>
+    </div>
+
+    <div class="inventario"></div>
+
+    <div class="boton">
+      <button id="botonContinuarEscena4">Continuar</button>
+    </div>
   `;
-  contenedorEscena.querySelector('#botonContinuarEscena4').addEventListener('click', () => cambiarEscena(4));
+
+  contenedorEscena
+    .querySelector('#botonContinuarEscena4')
+    .addEventListener('click', () => cambiarEscena(4));
+
   app.append(contenedorEscena);
 }
+
 
 // ========== ESCENA 4 ==========
 function escenaMostrarEnemigos() {
   const contenedorEscena = document.createElement('div');
+  contenedorEscena.className = "escena4";
+  contenedorEscena.innerHTML = `
+    <div class="cabeceraEnemigos">
+      <p class="nombreEnemigos">Enemigos Disponibles</p>
+    </div>
+  `;
 
   listaEnemigos = [
-    new Enemigo("Goblin", "Enemigo", 15, 50),
-    new Enemigo("Orco", "Enemigo", 25, 80),
-    new Enemigo("Troll", "Enemigo", 35, 120),
-    new Jefe("Dragón", 30, 200, "Llama infernal", 2)
-  ];
+  new Enemigo("Goblin", "", "Enemigo", 15, 50),
+  new Enemigo("Orco", "", "Enemigo", 25, 80),
+  new Enemigo("Troll", "", "Enemigo", 35, 120),
+  new Jefe("Dragón", "", 30, 200, "Llama infernal", 2),
+  new Enemigo("Esqueleto", "", "Enemigo", 20, 60),
+  new Enemigo("Hombre Lobo", "", "Enemigo", 28, 90)
+];
 
-  contenedorEscena.innerHTML = `<h2>👹Enemigos</h2>`;
 
-  listaEnemigos.forEach(enemigoActual => {
-    let descripcion = `${enemigoActual.nombre} (${enemigoActual.tipo}) - Ataque: ${enemigoActual.ataque}, Vida: ${enemigoActual.vida}`;
+  const contenedorEnemigos = document.createElement("div");
+  contenedorEnemigos.className = "contenedor-enemigos";
 
-    // Si es un jefe, añadimos la habilidad
-    if (enemigoActual instanceof Jefe) {
-      descripcion += `, Habilidad: ${enemigoActual.habilidad}`;
-    }
+  listaEnemigos.forEach(enemigo => {
+    const card = document.createElement('div');
+    card.className = "tarjetaEnemigo";
 
-    contenedorEscena.innerHTML += `<p>${descripcion}</p>`;
+    card.innerHTML = `
+      <div class="imgEnemigo">
+      <p id=nombreEnemigo>${enemigo.nombre}</p>
+      <img src="${enemigo.img || "./Imagenes/defaultEnemigo.png"}">
+      </div>
+
+      <div class="statsEnemigo">
+        <p>Vida: ${enemigo.vida}</p>
+        <p>Ataque: ${enemigo.ataque}</p>
+        ${enemigo instanceof Jefe ? `<p>Habilidad: ${enemigo.habilidad}</p>` : ''}
+      </div>
+    `;
+
+    contenedorEnemigos.appendChild(card); 
   });
+
+  contenedorEscena.appendChild(contenedorEnemigos);
 
   const botonIniciarBatallas = document.createElement('button');
   botonIniciarBatallas.textContent = "Iniciar batallas";
   botonIniciarBatallas.addEventListener('click', () => cambiarEscena(5));
 
-  contenedorEscena.append(botonIniciarBatallas);
-  app.append(contenedorEscena);
+  contenedorEscena.appendChild(botonIniciarBatallas);
+  app.appendChild(contenedorEscena);
 }
+
+
 
 
 // ========== ESCENA 5 ==========
@@ -222,28 +273,32 @@ function escenaBatallas() {
 
 
 
-
-
-
-
 // ========== ESCENA 6 ==========
-function escenaResultadoFinal(jugadorMurio = false) {
+function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
   const contenedorEscena = document.createElement('div');
-
-  // Si el jugador murió, siempre es Novato
   const nivelJugadorFinal = jugadorMurio ? "Novato" : (jugadorActual.puntos >= 50 ? "Veterano" : "Novato");
 
   contenedorEscena.innerHTML = `
-    <h2>🏁 Resultado Final</h2>
-    <p>${jugadorActual.nombre} ha conseguido ${jugadorActual.puntos} puntos.</p>
-    <p>Nivel alcanzado: <strong>${nivelJugadorFinal}</strong></p>
-    <button id="botonReiniciarJuego">Volver a empezar</button>
+    <div class="cabeceraFinal">
+      <p class="nombreCabecera">Resultado Final</p>
+    </div>
+    <div class="contenedorFinal">
+      <p class="vs">
+        <img src="./Imagenes/imgJugador.svg">
+        ${ultimoEnemigo ? 'VS<img src="' + ultimoEnemigo.imagenURL + '">' : ''}
+      </p>
+      <p>${jugadorActual.nombre} ha conseguido ${jugadorActual.puntos} puntos.</p><br><br>
+      <p id="nivelAlcanzado">Nivel alcanzado: <strong>${nivelJugadorFinal}</strong></p>
+      <button id="botonReiniciarJuego">Volver a empezar</button>
+    </div>
   `;
 
-  contenedorEscena.querySelector('#botonReiniciarJuego').addEventListener('click', () => location.reload());
+  contenedorEscena.querySelector('#botonReiniciarJuego')
+    .addEventListener('click', () => location.reload());
 
-  app.append(contenedorEscena);
+  app.appendChild(contenedorEscena);
 }
+
 
 
 

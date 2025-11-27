@@ -1,7 +1,7 @@
 export class Producto {
     constructor(nombre, imagen, precio, rareza, tipo, bonus) {
         this.nombre = nombre
-        this.imagen = imagen
+         this.imagenURL = imagen;
         this.precio = precio
         this.rareza = rareza
         this.tipo = tipo
@@ -20,6 +20,6 @@ export class Producto {
 
 
     presentar() {
-        return `${this.nombre} - Precio: ${this.precioFormateado} - Rareza: ${this.rareza}`;
+        return `${this.nombre} <br> Precio: ${this.precioFormateado} <br> Rareza: ${this.rareza}`;
     }
 }

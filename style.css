@@ -1,6 +1,148 @@
-
 *{
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
+}
+
+.escena1, .escena2, .escena3, .escena4, .escena6 {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #d0b169;
+}
+
+.cabeceraJugador, .cabeceraMercado, .cabeceraEnemigos, .cabeceraFinal {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #d0b169;
+}
+
+.imgJugador img {
+    width: 120px;
+    height: auto;
+}
+
+.nombreJugador {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.caracteristicas {
+    background-color: #604214;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+    flex-grow: 1;
+    justify-items: center;
+    align-items: center;
+}
+
+.ataque, .defensa, .vida, .puntos {
+    background-color: #d0b169;
+    padding: 40px;
+    width: 200px;
+    text-align: center;
+    box-sizing: border-box;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.boton{
+    background-color: #604214;
+}
+
+#botonContinuar, .btnCompra, #botonContinuarEscena4, #botonReiniciarJuego {
+    margin: 20px auto;
+    display: block;
+    background-color: yellow;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Escena2*/
+
+.contenedor-productos, .contenedor-enemigos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; 
+    padding: 60px;
+    background-color: #604214;
+    text-align: center;
+}
+
+.producto{
+  border: 2px solid black;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.producto.seleccionado {
+  background: orange;
+}
+
+.producto img {
+  max-width: 90px;
+  margin-bottom: 12px;
+  padding-top: 3px;
+}
+
+.producto p {
+  margin: 0 0 8px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.producto button {
+  background: #eafc4d;
+  border: none;
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-bottom: 6px;
+}
+
+/*Escena3*/
+
+
+/*Escena4*/
+.tarjetaEnemigo {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  margin: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.tarjetaEnemigo img {
+  width: 100px;
+  height: auto;
+}
+
+
+/*Escena6*/
+.contenedorFinal {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; 
+    padding: 60px;
+    background-color: #604214;
+    text-align: center;
+    margin-top: 100px;
+}
+
+#nivelAlcanzado{
+  text-align: center;
 }
 
