@@ -32,7 +32,7 @@ function escenaCrearJugador() {
   <div class="cabeceraJugador">
     <p class="nombreJugador">Cazador</p>
     <div class="imgJugador">
-        <img src="./Imagenes/imgJugador.svg">
+        <img src="./Imagenes/imgJugador.png">
     </div>
   </div>
 
@@ -116,15 +116,21 @@ function escenaMercado() {
     // Añadir contenedor de productos a la escena
     contenedorEscena.appendChild(contenedorProductos);
 
+    const contenedorBtnCompra = document.createElement('div');
+contenedorBtnCompra.className = "contenedorBtnCompra";
+
     const botonConfirmarCompra = document.createElement('button');
-    botonConfirmarCompra.className = "btnCompra"
-    botonConfirmarCompra.textContent = "Confirmar compra";
-    botonConfirmarCompra.addEventListener('click', () => {
+botonConfirmarCompra.className = "btnCompra";
+botonConfirmarCompra.textContent = "Confirmar Compra";
+
+        botonConfirmarCompra.addEventListener('click', () => {
         productosSeleccionados.forEach(producto => jugadorActual.añadirObjeto(producto));
         cambiarEscena(3);
     });
 
-    contenedorEscena.appendChild(botonConfirmarCompra);
+    contenedorBtnCompra.appendChild(botonConfirmarCompra);
+    contenedorEscena.appendChild(contenedorBtnCompra);
+
     app.append(contenedorEscena);
 }
 
@@ -177,14 +183,13 @@ function escenaMostrarEnemigos() {
   `;
 
   listaEnemigos = [
-  new Enemigo("Goblin", "", "Enemigo", 15, 50),
-  new Enemigo("Orco", "", "Enemigo", 25, 80),
-  new Enemigo("Troll", "", "Enemigo", 35, 120),
-  new Jefe("Dragón", "", 30, 200, "Llama infernal", 2),
-  new Enemigo("Esqueleto", "", "Enemigo", 20, 60),
-  new Enemigo("Hombre Lobo", "", "Enemigo", 28, 90)
-];
-
+    new Enemigo("Goblin", "./Imagenes/goblin.svg", "Enemigo", 15, 50),
+    new Enemigo("Orco", "./Imagenes/orco.svg", "Enemigo", 25, 80),
+    new Enemigo("Troll", "./Imagenes/troll.svg", "Enemigo", 35, 120),
+    new Jefe("Dragón", "./Imagenes/dragon.svg", 30, 200, "Llama infernal", 2),
+    new Enemigo("Esqueleto", "./Imagenes/esqueleto.svg", "Enemigo", 20, 60),
+    new Enemigo("Hombre de Hierro", "./Imagenes/hierro.svg", "Enemigo", 28, 90)
+  ];
 
   const contenedorEnemigos = document.createElement("div");
   contenedorEnemigos.className = "contenedor-enemigos";
@@ -195,8 +200,8 @@ function escenaMostrarEnemigos() {
 
     card.innerHTML = `
       <div class="imgEnemigo">
-      <p id=nombreEnemigo>${enemigo.nombre}</p>
-      <img src="${enemigo.img || "./Imagenes/defaultEnemigo.png"}">
+        <p id="nombreEnemigo">${enemigo.nombre}</p>
+        <img src="${enemigo.imagen || "./Imagenes/defaultEnemigo.svg"}">
       </div>
 
       <div class="statsEnemigo">
@@ -209,16 +214,28 @@ function escenaMostrarEnemigos() {
     contenedorEnemigos.appendChild(card); 
   });
 
+  // Añadir contenedor de enemigos a la escena
   contenedorEscena.appendChild(contenedorEnemigos);
 
+  // Contenedor externo para el botón
+  const contenedorBtnBatalla = document.createElement('div');
+  contenedorBtnBatalla.className = "contenedorBtnBatalla";
+
   const botonIniciarBatallas = document.createElement('button');
+  botonIniciarBatallas.className = "btnBatalla";
   botonIniciarBatallas.textContent = "Iniciar batallas";
+
   botonIniciarBatallas.addEventListener('click', () => cambiarEscena(5));
 
-  contenedorEscena.appendChild(botonIniciarBatallas);
+  // Poner el botón dentro del contenedor
+  contenedorBtnBatalla.appendChild(botonIniciarBatallas);
+
+  // Añadir el contenedor del botón al final de la escena
+  contenedorEscena.appendChild(contenedorBtnBatalla);
+
+  // Añadir toda la escena a la app
   app.appendChild(contenedorEscena);
 }
-
 
 
 
@@ -227,55 +244,89 @@ function escenaBatallas() {
   app.innerHTML = ""; // Limpiar la pantalla
 
   const contenedorEscena = document.createElement('div');
+  contenedorEscena.className = "escenaBatallas";
+
   const enemigoActual = listaEnemigos[indiceBatallaActual];
 
-  contenedorEscena.innerHTML = `<h2>⚔️ Batalla contra ${enemigoActual.nombre}</h2>`;
-
-  // --- Ejecutar la batalla ---
-  const resultado = Batalla(enemigoActual, jugadorActual);
-
-  let textoResultado = "";
-  if (resultado.ganador === "jugador") {
-    textoResultado = `🎉 ${jugadorActual.nombre} ha vencido a ${enemigoActual.nombre} y gana ${resultado.puntos} puntos!`;
-  } else {
-    textoResultado = `💀 ${enemigoActual.nombre} ha derrotado a ${jugadorActual.nombre}! La partida ha terminado.`;
+  if (!enemigoActual) {
+    console.error("No hay enemigo actual, índice:", indiceBatallaActual);
+    return;
   }
 
-  contenedorEscena.innerHTML += `
-    <p>${textoResultado}</p>
-    <pre>${jugadorActual.mostrarJugador()}</pre>
-  `;
+  // --- Mostrar título ---
+  const titulo = document.createElement('div');
+  titulo.className = "cabeceraBatallas";
+  titulo.textContent = `Batalla contra ${enemigoActual.nombre}`;
+  contenedorEscena.appendChild(titulo);
 
-  const botonSiguienteBatalla = document.createElement('button');
+  // --- Contenedor de imágenes de batalla ---
+  const contenedorImagenes = document.createElement('div');
+  contenedorImagenes.className = "contenedorImagenesBatalla";
+
+  // Imagen del jugador
+  const imgJugador = document.createElement('img');
+  imgJugador.src = "./Imagenes/imgGuerrera.svg"; // jugadorActual debe tener la propiedad 'imagen'
+  imgJugador.alt = jugadorActual.nombre;
+  imgJugador.className = "imgBatalla";
+
+  // Imagen del enemigo
+  const imgEnemigo = document.createElement('img');
+  imgEnemigo.src = enemigoActual.imagen; // propiedad 'imagen' de Enemigo
+  imgEnemigo.alt = enemigoActual.nombre;
+  imgEnemigo.className = "imgBatalla";
+
+  // Agregamos las imágenes al contenedor
+  contenedorImagenes.appendChild(imgJugador);
+  contenedorImagenes.appendChild(imgEnemigo);
+
+  // Agregamos el contenedor de imágenes a la escena
+  contenedorEscena.appendChild(contenedorImagenes);
+
+  // --- Ejecutar batalla ---
+  const resultado = Batalla(enemigoActual, jugadorActual);
+
+  // --- Mostrar resultado de la batalla ---
+  const resultadoTexto = document.createElement('p');
+  if (resultado.ganador === "jugador") {
+resultadoTexto.innerHTML = `Ganador: <strong>${jugadorActual.nombre}</strong><br>Puntos ganados: ${resultado.puntos}`;
+  }else{
+    resultadoTexto.innerHTML = `Ganador: <strong>${enemigoActual.nombre}</strong> ha derrotado a ${jugadorActual.nombre}`;
+  }
+  resultadoTexto.className = "resultadoBatalla";
+  contenedorEscena.appendChild(resultadoTexto);
+
+  // --- Botón siguiente batalla ---
+  const botonSiguiente = document.createElement('button');
+  botonSiguiente.className = "btnBatalla";
 
   if (resultado.jugadorMurio) {
-    // Si el jugador murió, vamos directo al resultado final
-    botonSiguienteBatalla.textContent = "Ver resultado final";
-    botonSiguienteBatalla.addEventListener('click', () => {
-      cambiarEscena(6, true); // pasar flag indicando que murió
-    });
+    botonSiguiente.textContent = "Ver resultado final";
+    botonSiguiente.addEventListener('click', () => cambiarEscena(6, true));
   } else {
-    // Si sobrevivió, permitir siguiente batalla o ver resultado final
-    botonSiguienteBatalla.textContent = (indiceBatallaActual < listaEnemigos.length - 1) ? "Siguiente batalla" : "Ver resultado final";
-    botonSiguienteBatalla.addEventListener('click', () => {
+    botonSiguiente.textContent = (indiceBatallaActual < listaEnemigos.length - 1) ? "Siguiente batalla" : "Ver resultado final";
+    botonSiguiente.addEventListener('click', () => {
       indiceBatallaActual++;
       if (indiceBatallaActual < listaEnemigos.length) {
         escenaBatallas(); // siguiente batalla
       } else {
-        cambiarEscena(6, false); // jugador sobrevivió
+        cambiarEscena(6, false);
       }
     });
   }
 
-  contenedorEscena.append(botonSiguienteBatalla);
-  app.append(contenedorEscena);
+  contenedorEscena.appendChild(botonSiguiente);
+
+  app.appendChild(contenedorEscena);
 }
+
+
 
 
 
 // ========== ESCENA 6 ==========
 function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
   const contenedorEscena = document.createElement('div');
+  contenedorEscena.className = "escena6"
   const nivelJugadorFinal = jugadorMurio ? "Novato" : (jugadorActual.puntos >= 50 ? "Veterano" : "Novato");
 
   contenedorEscena.innerHTML = `
@@ -283,13 +334,9 @@ function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
       <p class="nombreCabecera">Resultado Final</p>
     </div>
     <div class="contenedorFinal">
-      <p class="vs">
-        <img src="./Imagenes/imgJugador.svg">
-        ${ultimoEnemigo ? 'VS<img src="' + ultimoEnemigo.imagenURL + '">' : ''}
-      </p>
-      <p>${jugadorActual.nombre} ha conseguido ${jugadorActual.puntos} puntos.</p><br><br>
-      <p id="nivelAlcanzado">Nivel alcanzado: <strong>${nivelJugadorFinal}</strong></p>
-      <button id="botonReiniciarJuego">Volver a empezar</button>
+    <p>${jugadorActual.nombre} a logrado ser un <strong>${nivelJugadorFinal}</p>
+    <p>Puntos totales:${jugadorActual.puntos}
+      <button id="botonReiniciarJuego">Reiniciar</button>
     </div>
   `;
 

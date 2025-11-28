@@ -4,20 +4,26 @@
     font-family: sans-serif;
 }
 
-.escena1, .escena2, .escena3, .escena4, .escena6 {
-    width: 100vw;
+.escena1, .escena2, .escena3, .escena4 {
+    width: 99vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: #d0b169;
 }
 
-.cabeceraJugador, .cabeceraMercado, .cabeceraEnemigos, .cabeceraFinal {
+.cabeceraJugador, .cabeceraMercado, .cabeceraEnemigos, .cabeceraBatallas {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
     background-color: #d0b169;
+}
+
+.cabeceraFinal{
+  text-align: center;
+  background-color: #d0b169;
+  padding: 20px;
 }
 
 .imgJugador img {
@@ -55,7 +61,7 @@
     background-color: #604214;
 }
 
-#botonContinuar, .btnCompra, #botonContinuarEscena4, #botonReiniciarJuego {
+#botonContinuar, .btnCompra, .btnBatalla, #botonContinuarEscena4 {
     margin: 20px auto;
     display: block;
     background-color: yellow;
@@ -63,7 +69,9 @@
     font-weight: bold;
     cursor: pointer;
 }
-
+.contenedorBtnCompra, .contenedorBtnBatalla{
+  background-color: #d0b169;
+}
 /*Escena2*/
 
 .contenedor-productos, .contenedor-enemigos {
@@ -115,7 +123,7 @@
 .tarjetaEnemigo {
   background: white;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 0.5rem;
   margin: 0.5rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: flex;
@@ -125,24 +133,56 @@
   text-align: center;
 }
 
-.tarjetaEnemigo img {
-  width: 100px;
-  height: auto;
+
+.imgEnemigo img {
+  height: 145px;   /* Ajusta la altura que quieras */
+  width: auto;     /* Mantiene la proporción */
+  object-fit: contain; /* Ajusta para que no se deformen */
 }
 
 
+/*Escena5*/
+.contenedorImagenesBatalla {
+  display: flex;
+  justify-content: space-around; /* jugador a la izquierda, enemigo a la derecha */
+  align-items: center;
+  margin: 20px 0;
+}
+
+.imgBatalla {
+  height: 200px; /* altura uniforme */
+  width: auto;   /* mantiene proporción */
+  object-fit: contain;
+  border-radius: 10px;     /* opcional */
+}
+
+
+
 /*Escena6*/
+.escena6 {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #604214;
+}
+
 .contenedorFinal {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px; 
-    padding: 60px;
+    margin:15%;
     background-color: #604214;
     text-align: center;
-    margin-top: 100px;
+    color: white
 }
 
 #nivelAlcanzado{
   text-align: center;
 }
 
+ #botonReiniciarJuego {
+    margin: 40px auto;
+    display: block;
+    background-color: yellow;
+    padding: 10px 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
