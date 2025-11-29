@@ -69,6 +69,17 @@
     font-weight: bold;
     cursor: pointer;
 }
+
+#botonContinuar:hover, 
+.btnCompra:hover, 
+.btnBatalla:hover, 
+#botonContinuarEscena4:hover,
+#botonReiniciarJuego:hover {
+    background-color: gold;      
+    transform: scale(1.05);     
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
 .contenedorBtnCompra, .contenedorBtnBatalla{
   background-color: #d0b169;
 }
@@ -81,6 +92,7 @@
     padding: 60px;
     background-color: #604214;
     text-align: center;
+
 }
 
 .producto{
@@ -88,6 +100,13 @@
   background-color: white;
   border-radius: 10px;
   text-align: center;
+      transition: transform 0.2s ease; 
+
+}
+
+.producto:hover {
+  cursor: pointer;
+    transform: scale(1.1); 
 }
 
 .producto.seleccionado {
@@ -95,10 +114,14 @@
 }
 
 .producto img {
-  max-width: 90px;
-  margin-bottom: 12px;
-  padding-top: 3px;
+    width: 70px;        
+    height: 80px;       
+    object-fit: cover;   
+    display: block;
+    margin: 0 auto 12px; 
+    padding-top: 3px;
 }
+
 
 .producto p {
   margin: 0 0 8px;
@@ -116,6 +139,37 @@
   margin-bottom: 6px;
 }
 
+.contenedor-carrito {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    min-height: 80px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.imagencarrito{
+        transition: transform 0.2s ease;
+
+}
+
+.imagencarrito:hover {
+    transform: scale(1.1); 
+}
+
+.contenedor-carrito img {
+    width: 60px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+
 /*Escena3*/
 
 
@@ -131,29 +185,49 @@
   align-items: center;
   gap: 0.5rem;
   text-align: center;
+  
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.tarjetaEnemigo:hover {
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  transform: scale(1.03);
+}
 
 .imgEnemigo img {
-  height: 145px;   /* Ajusta la altura que quieras */
-  width: auto;     /* Mantiene la proporción */
-  object-fit: contain; /* Ajusta para que no se deformen */
+  height: 145px;   
+  width: auto;     
+  object-fit: contain; 
 }
 
 
 /*Escena5*/
+
+.contenedorBatalla {
+  background-color: #604214; 
+  padding: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: white; 
+  height: 100vh;
+}
+
+
 .contenedorImagenesBatalla {
   display: flex;
-  justify-content: space-around; /* jugador a la izquierda, enemigo a la derecha */
+  justify-content: space-around;
   align-items: center;
   margin: 20px 0;
 }
 
 .imgBatalla {
-  height: 200px; /* altura uniforme */
-  width: auto;   /* mantiene proporción */
+  height: 200px; 
+  width: auto;   
   object-fit: contain;
-  border-radius: 10px;     /* opcional */
+  border-radius: 10px;     
 }
 
 

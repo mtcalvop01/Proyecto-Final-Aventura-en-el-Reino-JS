@@ -21,10 +21,10 @@ export class Jugador {
 
 get ataqueTotal() {
     let total = 0;
-    for (let i = 0; i < this.inventario.length; i++) { // recorremos por índice
-        let item = this.inventario[i];                // obtenemos el item actual
+    for (let i = 0; i < this.inventario.length; i++) { 
+        let item = this.inventario[i];                
         if(item.tipo.toLowerCase() === "arma" && item.bonus.ataque) { 
-            total += item.bonus.ataque;               // sumamos el bonus de ataque
+            total += item.bonus.ataque;               
         }
     }
     return total;
