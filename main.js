@@ -1,18 +1,46 @@
 import { Jugador } from './Jugador.js';
 import { Enemigo } from './Enemigo.js';
-import {Jefe} from './Jefe.js';
+import { Jefe } from './Jefe.js';
 import { Producto } from './Producto.js';
 import { mercado } from './Mercado.js';
 import { Batalla } from './Batalla.js';
 import { clasificarJugador } from './Ranking.js';
 import { vidaMax, umbral } from './constants/constants.js';
 
+/**
+ * Elemento principal de la aplicación donde se renderizan las escenas.
+ * @type {HTMLElement}
+ */
 const app = document.getElementById('app');
+
+/**
+ * Instancia del jugador actual.
+ * @type {Jugador}
+ */
 let jugadorActual;
+
+/**
+ * Número de la escena actualmente activa.
+ * @type {number}
+ */
 let numeroEscenaActual = 1;
+
+/**
+ * Lista de enemigos disponibles para las batallas.
+ * @type {Array<Enemigo<Jefe}
+ */
 let listaEnemigos = [];
+
+/**
+ * Índice del enemigo actual en la lista de batallas.
+ * @type {number}
+ */
 let indiceBatallaActual = 0;
 
+/**
+ * Cambia la escena actual de la aplicación.
+ * @param {number} numeroEscena - Número de la escena a mostrar (1 a 6).
+ */
 function cambiarEscena(numeroEscena) {
   numeroEscenaActual = numeroEscena;
   app.innerHTML = "";
@@ -24,7 +52,9 @@ function cambiarEscena(numeroEscena) {
   if (numeroEscena === 6) escenaResultadoFinal();
 }
 
-// ========== ESCENA 1 ==========
+/**
+ * Escena 1: Creación del jugador
+ */
 function escenaCrearJugador() {
   const contenedorEscena = document.createElement('div');
   contenedorEscena.className = "escena1"
@@ -51,46 +81,47 @@ function escenaCrearJugador() {
   jugadorActual = new Jugador("Guerrera", 100, 0, 0);
 
   contenedorEscena.querySelector('#botonContinuar').addEventListener('click', () => {
-    cambiarEscena(2); 
+    cambiarEscena(2);
   });
 
   app.append(contenedorEscena);
 }
 
-
-// ========== ESCENA 2 ==========
+/**
+ * Escena 2: Interfaz del mercado y selección de productos.
+ */
 function escenaMercado() {
-    const contenedorEscena = document.createElement('div');
-    contenedorEscena.className = "escena2";
-    contenedorEscena.innerHTML = `
+  const contenedorEscena = document.createElement('div');
+  contenedorEscena.className = "escena2";
+  contenedorEscena.innerHTML = `
         <div class="cabeceraMercado">
             <p id="nombreMercado">Mercado Negro</p>
         </div>
     `;
 
-    const descuentosPorRareza = {
-        común: Math.floor(Math.random() * 20),
-        raro: Math.floor(Math.random() * 30),
-        legendario: Math.floor(Math.random() * 40)
-    };
+  const descuentosPorRareza = {
+    común: Math.floor(Math.random() * 20),
+    raro: Math.floor(Math.random() * 30),
+    legendario: Math.floor(Math.random() * 40)
+  };
 
-    const productosSeleccionados = new Set();
+  const productosSeleccionados = new Set();
 
-    const contenedorProductos = document.createElement("div");
-    contenedorProductos.className = "contenedor-productos"; 
+  const contenedorProductos = document.createElement("div");
+  contenedorProductos.className = "contenedor-productos";
 
-    const contenedorCarrito = document.createElement('div');
-    contenedorCarrito.className = "contenedor-carrito";
-    contenedorEscena.appendChild(contenedorCarrito);
+  const contenedorCarrito = document.createElement('div');
+  contenedorCarrito.className = "contenedor-carrito";
+  contenedorEscena.appendChild(contenedorCarrito);
 
-    mercado.productos.forEach((productoActual, indiceProducto) => {
-        const descuentoActual = descuentosPorRareza[productoActual.rareza];
-        productoActual.aplicarDescuento(descuentoActual);
+  mercado.productos.forEach((productoActual, indiceProducto) => {
+    const descuentoActual = descuentosPorRareza[productoActual.rareza];
+    productoActual.aplicarDescuento(descuentoActual);
 
-        const tarjetaProductoDiv = document.createElement('div');
-        tarjetaProductoDiv.className = "producto";
-        tarjetaProductoDiv.id = `card-${indiceProducto}`;
-        tarjetaProductoDiv.innerHTML = `
+    const tarjetaProductoDiv = document.createElement('div');
+    tarjetaProductoDiv.className = "producto";
+    tarjetaProductoDiv.id = `card-${indiceProducto}`;
+    tarjetaProductoDiv.innerHTML = `
             <img src="${productoActual.imagenURL}" alt="${productoActual.nombre}">
             <p>${productoActual.presentar()}</p>
             <button class="add-to-cart" id="botonSeleccionarProducto${indiceProducto}">
@@ -98,26 +129,26 @@ function escenaMercado() {
             </button>
         `;
 
-        tarjetaProductoDiv.addEventListener("mouseenter", () => {
-            gsap.to(tarjetaProductoDiv, { scale: 1.1, duration: 0.2 });
-        });
-        tarjetaProductoDiv.addEventListener("mouseleave", () => {
-            gsap.to(tarjetaProductoDiv, { scale: 1, duration: 0.2 });
-        });
+    tarjetaProductoDiv.addEventListener("mouseenter", () => {
+      gsap.to(tarjetaProductoDiv, { scale: 1.1, duration: 0.2 });
+    });
+    tarjetaProductoDiv.addEventListener("mouseleave", () => {
+      gsap.to(tarjetaProductoDiv, { scale: 1, duration: 0.2 });
+    });
 
-        const boton = tarjetaProductoDiv.querySelector(`#botonSeleccionarProducto${indiceProducto}`);
-        boton.addEventListener('click', () => {
-    if (productosSeleccionados.has(productoActual)) {
+    const boton = tarjetaProductoDiv.querySelector(`#botonSeleccionarProducto${indiceProducto}`);
+    boton.addEventListener('click', () => {
+      if (productosSeleccionados.has(productoActual)) {
 
-      productosSeleccionados.delete(productoActual);
+        productosSeleccionados.delete(productoActual);
         tarjetaProductoDiv.classList.remove('seleccionado');
 
         const imgEnCarrito = contenedorCarrito.querySelector(`img[data-id='${indiceProducto}']`);
-        if(imgEnCarrito) imgEnCarrito.remove();
+        if (imgEnCarrito) imgEnCarrito.remove();
 
-    } else {
+      } else {
 
-      productosSeleccionados.add(productoActual);
+        productosSeleccionados.add(productoActual);
         tarjetaProductoDiv.classList.add('seleccionado');
 
         const imgDentroBoton = tarjetaProductoDiv.querySelector('img');
@@ -136,12 +167,12 @@ function escenaMercado() {
         const carritoCentroY = rectCarrito.top + rectCarrito.height / 2 - rectImg.height / 2;
 
         gsap.to(imgAnim, {
-            x: carritoCentroX - rectImg.left,
-            y: carritoCentroY - rectImg.top,
-            scale: 0.2,
-            duration: 0.8,
-            ease: "power2.inOut",
-            onComplete: () => imgAnim.remove()
+          x: carritoCentroX - rectImg.left,
+          y: carritoCentroY - rectImg.top,
+          scale: 0.2,
+          duration: 0.8,
+          ease: "power2.inOut",
+          onComplete: () => imgAnim.remove()
         });
 
         const imgEnCarrito = document.createElement('img');
@@ -149,36 +180,36 @@ function escenaMercado() {
         imgEnCarrito.dataset.id = indiceProducto;
         imgEnCarrito.className = "imagencarrito";
         contenedorCarrito.appendChild(imgEnCarrito);
-    }
-});
-
-
-        contenedorProductos.appendChild(tarjetaProductoDiv);
+      }
     });
 
-    contenedorEscena.appendChild(contenedorProductos);
 
-    const contenedorBtnCompra = document.createElement('div');
-    contenedorBtnCompra.className = "contenedorBtnCompra";
+    contenedorProductos.appendChild(tarjetaProductoDiv);
+  });
 
-    const botonConfirmarCompra = document.createElement('button');
-    botonConfirmarCompra.className = "btnCompra";
-    botonConfirmarCompra.textContent = "Confirmar Compra";
+  contenedorEscena.appendChild(contenedorProductos);
 
-    botonConfirmarCompra.addEventListener('click', () => {
-        productosSeleccionados.forEach(producto => jugadorActual.añadirObjeto(producto));
-        cambiarEscena(3);
-    });
+  const contenedorBtnCompra = document.createElement('div');
+  contenedorBtnCompra.className = "contenedorBtnCompra";
 
-    contenedorBtnCompra.appendChild(botonConfirmarCompra);
-    contenedorEscena.appendChild(contenedorBtnCompra);
+  const botonConfirmarCompra = document.createElement('button');
+  botonConfirmarCompra.className = "btnCompra";
+  botonConfirmarCompra.textContent = "Confirmar Compra";
 
-    app.append(contenedorEscena);
+  botonConfirmarCompra.addEventListener('click', () => {
+    productosSeleccionados.forEach(producto => jugadorActual.añadirObjeto(producto));
+    cambiarEscena(3);
+  });
+
+  contenedorBtnCompra.appendChild(botonConfirmarCompra);
+  contenedorEscena.appendChild(contenedorBtnCompra);
+
+  app.append(contenedorEscena);
 }
 
-
-
-// ========== ESCENA 3 ==========
+/**
+ * Escena 3: Esrado actual del jugador, mostrando estadísitcas e inventario.
+ */
 function escenaEstadoJugador() {
   const contenedorEscena = document.createElement('div');
   contenedorEscena.className = "escena3";
@@ -205,7 +236,7 @@ function escenaEstadoJugador() {
     </div>
   `;
 
-    const contenedorCarrito = contenedorEscena.querySelector('.contenedor-carrito');
+  const contenedorCarrito = contenedorEscena.querySelector('.contenedor-carrito');
 
   jugadorActual.inventario.forEach((objeto, indice) => {
     const img = document.createElement('img');
@@ -222,8 +253,9 @@ function escenaEstadoJugador() {
   app.append(contenedorEscena);
 }
 
-
-// ========== ESCENA 4 ==========
+/**
+ * Escena 4: Mostrar los enemigos disponibles para las batallas.
+ */
 function escenaMostrarEnemigos() {
   const contenedorEscena = document.createElement('div');
   contenedorEscena.className = "escena4";
@@ -262,10 +294,10 @@ function escenaMostrarEnemigos() {
       </div>
     `;
 
-    contenedorEnemigos.appendChild(card); 
+    contenedorEnemigos.appendChild(card);
   });
 
-  
+
   contenedorEscena.appendChild(contenedorEnemigos);
 
   const contenedorBtnBatalla = document.createElement('div');
@@ -284,9 +316,9 @@ function escenaMostrarEnemigos() {
   app.appendChild(contenedorEscena);
 }
 
-
-
-// ========== ESCENA 5 ==========
+/**
+ * Escena 5: Secuencia de batallas entre el jugador y los enemigos.
+ */
 function escenaBatallas() {
   app.innerHTML = "";
 
@@ -308,28 +340,28 @@ function escenaBatallas() {
   contenedorImagenes.className = "contenedorImagenesBatalla";
 
   const imgJugador = document.createElement('img');
-  imgJugador.src = "./Imagenes/imgGuerrera.svg"; 
+  imgJugador.src = "./Imagenes/imgGuerrera.svg";
   imgJugador.alt = jugadorActual.nombre;
   imgJugador.className = "imgBatalla";
 
   const imgEnemigo = document.createElement('img');
-  imgEnemigo.src = enemigoActual.imagen; 
+  imgEnemigo.src = enemigoActual.imagen;
   imgEnemigo.alt = enemigoActual.nombre;
   imgEnemigo.className = "imgBatalla";
 
-   const vs = document.createElement('span');
+  const vs = document.createElement('span');
   vs.textContent = "VS";
   vs.className = "vsTexto";
 
   contenedorImagenes.appendChild(imgJugador);
-    contenedorImagenes.appendChild(vs);
+  contenedorImagenes.appendChild(vs);
 
   contenedorImagenes.appendChild(imgEnemigo);
   contenedorBatalla.appendChild(contenedorImagenes);
 
-gsap.from(imgJugador, { x: -300, duration: 1.5, ease: "power2.out" });
+  gsap.from(imgJugador, { x: -300, duration: 1.5, ease: "power2.out" });
 
-gsap.from(imgEnemigo, { x: 300, duration: 1.5, ease: "power2.out" });
+  gsap.from(imgEnemigo, { x: 300, duration: 1.5, ease: "power2.out" });
 
 
   const resultado = Batalla(enemigoActual, jugadorActual);
@@ -353,7 +385,7 @@ gsap.from(imgEnemigo, { x: 300, duration: 1.5, ease: "power2.out" });
     botonSiguiente.addEventListener('click', () => {
       indiceBatallaActual++;
       if (indiceBatallaActual < listaEnemigos.length) {
-        escenaBatallas(); 
+        escenaBatallas();
       } else {
         cambiarEscena(6, false);
       }
@@ -367,8 +399,11 @@ gsap.from(imgEnemigo, { x: 300, duration: 1.5, ease: "power2.out" });
   app.appendChild(contenedorEscena);
 }
 
-
-// ========== ESCENA 6 ==========
+/**
+ * Escena 6: Resultado final del juego, mostrando puntos y clasificación.
+ * @param {boolean} jugadorMurio - Indica si el jugador murió durante las batallas.
+ * @param {Enemigo|null} [ultimoEnemigo == null] - Último enemigo enfrentado.
+ */
 function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
   const contenedorEscena = document.createElement('div');
   contenedorEscena.className = "escena6";
@@ -415,5 +450,7 @@ function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
   }
 }
 
-
+/**
+ * Inicializa la aplicación mostrando la primera escena.
+ */
 cambiarEscena(1);

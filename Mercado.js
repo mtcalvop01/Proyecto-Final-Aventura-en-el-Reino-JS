@@ -1,10 +1,23 @@
 import { Producto } from "./Producto.js";
 
+
+/**
+ * Representa un mercado que contiene productos.
+ */
 export class Mercado {
+    /**
+     * Crea una instancia de Mercado.
+     * @param {Producto[]} productos - Array de objetos Producto disponilbles en el mercado. 
+     */
     constructor(productos) {
         this.productos = productos;
     }
 
+    /**
+     * Filtra los productos del mercado por rareza.
+     * @param {string} rarezaBuscada - Rareza pro la que se desea filtrar ("común", "raro", "legendario") 
+     * @returns {Producto[]} Array de prodcutos qeu coinciden con la rareza indicada. 
+     */
     filtrarPorRareza(rarezaBuscada) {
         let resultado = [];
         for (let i = 0; i < this.productos.length; i++) {
@@ -16,6 +29,10 @@ export class Mercado {
     }
 }
 
+/**
+ * Array de productos predeterminados disponibles en el mercado.
+ * @type {Producto[]}
+ */
 const mercadoArray = [
     new Producto("Espada de Hierro", "./Imagenes/espada_hierro.svg", 1200, "común", "arma", { ataque: 5 }),
     new Producto("Armadura de Cuero", "./Imagenes/armadura.svg", 950, "común", "armadura", { defensa: 3 }),
@@ -28,5 +45,9 @@ const mercadoArray = [
     new Producto("Botas del Veloz", "./Imagenes/botas.svg", 1800, "común", "armadura", { velocidad: 5 })
 ];
 
+/**
+ * Instancia predeterminada del mercado con productos iniciales.
+ * @type {Mercado}
+ */
 export const mercado = new Mercado(mercadoArray);
 
