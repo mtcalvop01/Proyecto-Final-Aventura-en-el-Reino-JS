@@ -129,13 +129,6 @@ function escenaMercado() {
             </button>
         `;
 
-    tarjetaProductoDiv.addEventListener("mouseenter", () => {
-      gsap.to(tarjetaProductoDiv, { scale: 1.1, duration: 0.2 });
-    });
-    tarjetaProductoDiv.addEventListener("mouseleave", () => {
-      gsap.to(tarjetaProductoDiv, { scale: 1, duration: 0.2 });
-    });
-
     const boton = tarjetaProductoDiv.querySelector(`#botonSeleccionarProducto${indiceProducto}`);
     boton.addEventListener('click', () => {
       if (productosSeleccionados.has(productoActual)) {
@@ -166,14 +159,27 @@ function escenaMercado() {
         const carritoCentroX = rectCarrito.left + rectCarrito.width / 2 - rectImg.width / 2;
         const carritoCentroY = rectCarrito.top + rectCarrito.height / 2 - rectImg.height / 2;
 
-        gsap.to(imgAnim, {
-          x: carritoCentroX - rectImg.left,
-          y: carritoCentroY - rectImg.top,
-          scale: 0.2,
-          duration: 0.8,
-          ease: "power2.inOut",
-          onComplete: () => imgAnim.remove()
-        });
+        const deltaX = carritoCentroX - rectImg.left;
+        const deltaY = carritoCentroY - rectImg.top;
+
+        const anim = imgAnim.animate(
+          [
+            {
+              transform: "translate(0, 0) scale(1)"
+            },
+            {
+              transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2)`
+            }
+          ],
+          {
+            duration: 800,
+            easing: "cubic-bezier(0.42, 0, 0.58, 1)",
+            fill: "forwards"
+          }
+        );
+
+        anim.onfinish = () => imgAnim.remove();
+
 
         const imgEnCarrito = document.createElement('img');
         imgEnCarrito.src = productoActual.imagenURL;
@@ -208,7 +214,7 @@ function escenaMercado() {
 }
 
 /**
- * Escena 3: Esrado actual del jugador, mostrando estadísitcas e inventario.
+ * Escena 3: Estado actual del jugador, mostrando estadísitcas e inventario.
  */
 function escenaEstadoJugador() {
   const contenedorEscena = document.createElement('div');
@@ -330,7 +336,7 @@ function escenaBatallas() {
 
   const titulo = document.createElement('div');
   titulo.className = "cabeceraBatallas";
-  titulo.textContent = `<h2 class= cabeceraBatallas>Batalla contra ${enemigoActual.nombre}</h2>`;
+  titulo.innerHTML = `<h2 class=cabeceraBatallas>Batalla contra ${enemigoActual.nombre}</h2>`;
   contenedorEscena.appendChild(titulo);
 
   const contenedorBatalla = document.createElement('div');
@@ -359,10 +365,29 @@ function escenaBatallas() {
   contenedorImagenes.appendChild(imgEnemigo);
   contenedorBatalla.appendChild(contenedorImagenes);
 
-  gsap.from(imgJugador, { x: -300, duration: 1.5, ease: "power2.out" });
+  imgJugador.animate(
+    [
+      { transform: "translateX(-300px)" },
+      { transform: "translateX(0)" }
+    ],
+    {
+      duration: 1500,
+      easing: "cubic-bezier(0.17, 0.67, 0.83, 0.67)",
+      fill: "forwards"
+    }
+  );
 
-  gsap.from(imgEnemigo, { x: 300, duration: 1.5, ease: "power2.out" });
-
+  imgEnemigo.animate(
+    [
+      { transform: "translateX(300px)" },
+      { transform: "translateX(0)" }
+    ],
+    {
+      duration: 1500,
+      easing: "cubic-bezier(0.17, 0.67, 0.83, 0.67)",
+      fill: "forwards"
+    }
+  );
 
   const resultado = Batalla(enemigoActual, jugadorActual);
   const resultadoTexto = document.createElement('p');
