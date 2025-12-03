@@ -60,7 +60,7 @@ function escenaCrearJugador() {
   contenedorEscena.className = "escena1"
   contenedorEscena.innerHTML = `
   <div class="cabeceraJugador">
-    <p class="nombreJugador">Guerrera</p>
+    <h2 class="nombreJugador">Guerrera</h2>
     <div class="imgJugador">
         <img src="./Imagenes/imgJugador.png">
     </div>
@@ -95,7 +95,7 @@ function escenaMercado() {
   contenedorEscena.className = "escena2";
   contenedorEscena.innerHTML = `
         <div class="cabeceraMercado">
-            <p id="nombreMercado">Mercado Negro</p>
+            <h2 id="nombreMercado">Mercado Negro</h2>
         </div>
     `;
 
@@ -216,7 +216,7 @@ function escenaEstadoJugador() {
 
   contenedorEscena.innerHTML = `
     <div class="cabeceraJugador">
-      <p class="nombreJugador">${jugadorActual.nombre}</p>
+      <h2 class="nombreJugador">${jugadorActual.nombre}</h2>
       <div class="imgJugador">
         <img src="./Imagenes/imgJugador.png">
       </div>
@@ -261,7 +261,7 @@ function escenaMostrarEnemigos() {
   contenedorEscena.className = "escena4";
   contenedorEscena.innerHTML = `
     <div class="cabeceraEnemigos">
-      <p class="nombreEnemigos">Enemigos Disponibles</p>
+      <h2 class="nombreEnemigos">Enemigos Disponibles</h2>
     </div>
   `;
 
@@ -330,7 +330,7 @@ function escenaBatallas() {
 
   const titulo = document.createElement('div');
   titulo.className = "cabeceraBatallas";
-  titulo.textContent = `Batalla contra ${enemigoActual.nombre}`;
+  titulo.textContent = `<h2 class= cabeceraBatallas>Batalla contra ${enemigoActual.nombre}</h2>`;
   contenedorEscena.appendChild(titulo);
 
   const contenedorBatalla = document.createElement('div');
@@ -412,7 +412,7 @@ function escenaResultadoFinal(jugadorMurio = false, ultimoEnemigo = null) {
 
   contenedorEscena.innerHTML = `
     <div class="cabeceraFinal">
-      <p class="nombreCabecera">Resultado Final</p>
+      <h2 class="nombreCabecera">Resultado Final</h2>
     </div>
     <div class="contenedorFinal">
       <p>${jugadorActual.nombre} ha logrado ser un <strong>${nivelJugadorFinal}</strong></p>

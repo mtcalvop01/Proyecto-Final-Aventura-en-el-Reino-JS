@@ -1,29 +1,69 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
+:root {
+    --color-primario: #d0b169;
+    --color-secundario: #604214;
+    --color-acento: #eafc4d;
+    --color-hover: gold;
+    --color-fondo: #f5f5f5;
+    --color-texto: #000000;
+    --color-texto-blanco: #ffffff;
+
+    --font-principal: 'Times New Roman', Times, serif;
+    --font-size-base: 16px;
+    --font-size-titulo: 18px;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    --padding-boton: 10px 20px;
+    --margin-boton: 20px auto;
+    --gap-grid: 10px;
+    --padding-grid: 60px;
+
+    --border-radius-carta: 10px;
+    --border-radius-boton: 6px;
+    --border-caja: 2px solid #ccc;
+
+    --width-img-producto: 70px;
+    --height-img-producto: 80px;
+    --width-img-carrito: 60px;
+    --height-img-carrito: 70px;
 }
 
-.escena1, .escena2, .escena3, .escena4 {
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-principal);
+    font-size: var(--font-size-base);
+    box-sizing: border-box;
+}
+
+.escena1,
+.escena2,
+.escena3,
+.escena4 {
     width: 99vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #d0b169;
+    background: var(--color-primario);
 }
 
-.cabeceraJugador, .cabeceraMercado, .cabeceraEnemigos, .cabeceraBatallas {
+.cabeceraJugador,
+.cabeceraMercado,
+.cabeceraEnemigos,
+.cabeceraBatallas {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     padding: 20px;
-    background-color: #d0b169;
+    background: var(--color-primario);
+    font-size: var(--font-size-titulo);
+    font-weight: var(--font-weight-bold);
 }
 
-.cabeceraFinal{
-  text-align: center;
-  background-color: #d0b169;
-  padding: 20px;
+.cabeceraFinal {
+    text-align: center;
+    background: var(--color-primario);
+    padding: 20px;
 }
 
 .imgJugador img {
@@ -31,232 +71,321 @@
     height: auto;
 }
 
-.nombreJugador {
-    font-size: 18px;
-    font-weight: bold;
+.nombreJugador, .nombreEnemigos, .nombreCabecera {
+    font-size: var(--font-size-titulo);
+    font-weight: var(--font-weight-bold);
 }
 
 .caracteristicas {
-    background-color: #604214;
+    background-color: var(--color-secundario);
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 10px;
-    padding: 10px;
+    gap: var(--gap-grid);
+    padding: var(--gap-grid);
     flex-grow: 1;
     justify-items: center;
     align-items: center;
 }
 
-.ataque, .defensa, .vida, .puntos {
-    background-color: #d0b169;
+.ataque,
+.defensa,
+.vida,
+.puntos {
+    background: var(--color-primario);
     padding: 40px;
     width: 200px;
     text-align: center;
     box-sizing: border-box;
+    border-radius: var(--border-radius-carta);
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.boton{
-    background-color: #604214;
+.boton {
+    background: var(--color-secundario);
 }
 
-#botonContinuar, .btnCompra, .btnBatalla, #botonContinuarEscena4 {
-    margin: 20px auto;
+#botonContinuar,
+.btnCompra,
+.btnBatalla,
+#botonContinuarEscena4 {
+    margin: var(--margin-boton);
     display: block;
-    background-color: yellow;
-    padding: 10px 20px;
-    font-weight: bold;
+    background: var(--color-acento);
+    padding: var(--padding-boton);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--border-radius-boton);
     cursor: pointer;
 }
 
-#botonContinuar:hover, 
-.btnCompra:hover, 
-.btnBatalla:hover, 
+#botonContinuar:hover,
+.btnCompra:hover,
+.btnBatalla:hover,
 #botonContinuarEscena4:hover,
 #botonReiniciarJuego:hover {
-    background-color: gold;      
-    transform: scale(1.05);     
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    filter: brightness(1.1);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    background: var(--color-hover);
 }
 
-.contenedorBtnCompra, .contenedorBtnBatalla{
-  background-color: #d0b169;
+.contenedorBtnCompra,
+.contenedorBtnBatalla {
+    background: var(--color-primario);
 }
-/*Escena2*/
 
-.contenedor-productos, .contenedor-enemigos {
+.contenedor-productos,
+.contenedor-enemigos {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px; 
-    padding: 60px;
-    background-color: #604214;
+    gap: var(--gap-grid);
+    padding: var(--padding-grid);
+    background: var(--color-secundario);
     text-align: center;
 
 }
 
-.producto{
-  border: 2px solid black;
-  background-color: white;
-  border-radius: 10px;
-  text-align: center;
-      transition: transform 0.2s ease; 
+.producto {
+    border: var(--border-caja);
+    background: var(--color-fondo);
+    border-radius: var(--border-radius-carta);
+    text-align: center;
+    transition: transform 0.2s ease;
 
 }
 
 .producto:hover {
-  cursor: pointer;
-    transform: scale(1.1); 
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 .producto.seleccionado {
-  background: orange;
+    background: orange;
 }
 
 .producto img {
-    width: 70px;        
-    height: 80px;       
-    object-fit: cover;   
+    width: var(--width-img-producto);
+    height: var(--height-img-producto);
+    object-fit: cover;
     display: block;
-    margin: 0 auto 12px; 
+    margin: 0 auto 12px;
     padding-top: 3px;
 }
 
-
 .producto p {
-  margin: 0 0 8px;
-  font-size: 16px;
-  text-align: center;
+    margin: 0 0 8px;
+    font-size: 16px;
+    text-align: center;
 }
 
 .producto button {
-  background: #eafc4d;
-  border: none;
-  padding: 6px 18px;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 6px;
+    background: var(--color-acento);
+    border: none;
+    padding: 6px 18px;
+    border-radius: var(--border-radius-boton);
+    font-weight: var(--font-weight-bold);
+    cursor: pointer;
+    margin-bottom: 6px;
 }
 
 .contenedor-carrito {
     display: flex;
-    gap: 10px;
-    padding: 10px;
+    flex-wrap: wrap;
+    gap: var(--gap-grid);
+    padding: 20px;
     margin-bottom: 10px;
     min-height: 80px;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    background-color: #f5f5f5;
+    border: var(--border-caja);
+    border-radius:var(--border-radius-carta);
+    background: var(--color-fondo);
     align-items: center;
     justify-content: center;
-    
 }
 
-.imagencarrito{
-        transition: transform 0.2s ease;
-
+.imagencarrito {
+    transition: transform 0.2s ease;
+    max-width: calc(100% / 4 - 6px);
 }
 
 .imagencarrito:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 
 .contenedor-carrito img {
-    width: 60px;
-    height: 70px;
+    width: var(--width-img-carrito);
+    height: var(--height-img-carrito);
     object-fit: cover;
-    border-radius: 5px;
+    border-radius: var(--border-radius-carta);
 }
 
-
-/*Escena3*/
-
-
-/*Escena4*/
 .tarjetaEnemigo {
-  background: white;
-  border-radius: 12px;
-  padding: 0.5rem;
-  margin: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  text-align: center;
-  
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
+    background: var(--color-fondo);
+    border-radius: var(--border-radius-carta);
+    padding: 0.5rem;
+    margin: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .tarjetaEnemigo:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.03);
 }
 
 .imgEnemigo img {
-  height: 145px;   
-  width: auto;     
-  object-fit: contain; 
+    height: 145px;
+    width: auto;
+    object-fit: contain;
 }
-
-
-/*Escena5*/
 
 .contenedorBatalla {
-  background-color: #604214; 
-  padding: 20px;
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  color: white; 
-  height: 100vh;
+    background: var(--color-secundario);
+    padding: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    color: var(--color-texto-blanco);
+    height: 100vh;
 }
 
-
 .contenedorImagenesBatalla {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0;
 }
 
 .imgBatalla {
-  height: 200px; 
-  width: auto;   
-  object-fit: contain;
-  border-radius: 10px;     
+    height: 200px;
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--border-radius-carta);
 }
 
-
-
-/*Escena6*/
 .escena6 {
     width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #604214;
+    background: var(--color-secundario);
 }
 
 .contenedorFinal {
-    margin:15%;
-    background-color: #604214;
+    margin: 15%;
+    background: var(--color-secundario);
     text-align: center;
-    color: white
+    color: var(--color-texto-blanco);
 }
 
-#nivelAlcanzado{
-  text-align: center;
+#nivelAlcanzado {
+    text-align: center;
 }
 
- #botonReiniciarJuego {
+#botonReiniciarJuego {
     margin: 40px auto;
     display: block;
-    background-color: yellow;
+    background-color: var(--color-acento);
     padding: 10px 50px;
     font-weight: bold;
     cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+
+    .contenedor-productos,
+    .contenedor-enemigos {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 40px;
+    }
+
+    .imgJugador img {
+        width: 100px;
+    }
+
+    .ataque,
+    .defensa,
+    .vida,
+    .puntos {
+        width: 160px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 720px) {
+
+    .contenedor-productos,
+    .contenedor-enemigos {
+        grid-template-columns: 1fr;
+        padding: 30px 20px;
+    }
+
+    .imgJugador img {
+        width: 80px;
+    }
+
+    .ataque,
+    .defensa,
+    .vida,
+    .puntos {
+        width: 140px;
+        padding: 20px;
+    }
+
+    .caracteristicas {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .contenedor-productos,
+    .contenedor-enemigos {
+        grid-template-columns: 1fr;
+        padding: 20px 10px;
+        gap: 6px;
+    }
+
+    .imgJugador img {
+        width: 60px;
+    }
+
+    .ataque,
+    .defensa,
+    .vida,
+    .puntos {
+        width: 120px;
+        padding: 16px;
+        font-size: 14px;
+    }
+
+    .caracteristicas {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    #botonContinuar,
+    .btnCompra,
+    .btnBatalla,
+    #botonContinuarEscena4 {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .imagencarrito {
+        width: 40px;
+        max-width: calc(100% / 4 - 4px);
+    }
+
+    .contenedor-carrito {
+        gap: 4px;
+        padding: 6px;
+    }
 }
