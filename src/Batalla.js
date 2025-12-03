@@ -7,7 +7,6 @@
  * @param {Object} enemigo - Objeto que representa al enemigo de la batalla.
  * @param {Object} jugador - Objeto que representa al jugador que participa en la batalla.
  * @returns {Object} Objeto con el ganador, los puntos obtenidos y si el jugador murió.
- * @returns 
  */
 
 

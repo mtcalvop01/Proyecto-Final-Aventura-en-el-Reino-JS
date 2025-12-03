@@ -27,7 +27,7 @@ let numeroEscenaActual = 1;
 
 /**
  * Lista de enemigos disponibles para las batallas.
- * @type {Array<Enemigo<Jefe}
+ * @type {Enemigo[]}
  */
 let listaEnemigos = [];
 
@@ -271,6 +271,10 @@ function escenaMostrarEnemigos() {
     </div>
   `;
 
+  /**
+   * Lista de enemigos disponibles para las batallas.
+   * @type {Enemigo[]}
+   */
   listaEnemigos = [
     new Enemigo("Goblin", "./Imagenes/goblin.svg", "Enemigo", 15, 50),
     new Enemigo("Orco", "./Imagenes/orco.svg", "Enemigo", 25, 80),
