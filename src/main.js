@@ -37,6 +37,7 @@ let listaEnemigos = [];
  */
 let indiceBatallaActual = 0;
 
+
 /**
  * Cambia la escena actual de la aplicación.
  * @param {number} numeroEscena - Número de la escena a mostrar (1 a 6).
@@ -52,34 +53,29 @@ function cambiarEscena(numeroEscena) {
   if (numeroEscena === 6) escenaResultadoFinal();
 }
 
+
 /**
  * Escena 1: Creación del jugador
  */
 function escenaCrearJugador() {
   const contenedorEscena = document.createElement('div');
-  contenedorEscena.className = "escena1"
+  contenedorEscena.className = "formularioRegistro"
+  
   contenedorEscena.innerHTML = `
-  <div class="cabeceraJugador">
-    <h2 class="nombreJugador">Guerrera</h2>
-    <div class="imgJugador">
-        <img src="./Imagenes/imgJugador.png">
-    </div>
-  </div>
+  <form class="formularioRegistro">
+            <label>Nombre:</label>
+            <input type="text" pattern="[^A-Za-z\s]{1, 20}"><br><br>
+            <label>Ataque:</label>
+            <input type="number" value="0" pattern="[^0\d+$"]><br><br>
+            <label>Defensa:</label>
+            <input type="number" value="0" pattern="[^0\d+?$]"><br><br>
+            <label>Vida:</label>
+            <input type="number" value="100" pattern="[^100\d+$]"><br><br>
+            <button id=botonContinuar>Continuar</button>
+        </form>`
+        jugadorActual = new Jugador();
 
-  <div class="caracteristicas">
-    <p class="ataque">Ataque: 0</p>
-    <p class="defensa">Defensa: 0</p>
-    <p class="vida">Vida: 100</p>
-    <p class="puntos">Puntos: 0</p>
-  </div>
-
-  <div id="boton">
-        <button id="botonContinuar">Continuar</button>
-</div>
-`;
-
-  jugadorActual = new Jugador("Guerrera", 100, 0, 0);
-
+        
   contenedorEscena.querySelector('#botonContinuar').addEventListener('click', () => {
     cambiarEscena(2);
   });
@@ -96,6 +92,7 @@ function escenaMercado() {
   contenedorEscena.innerHTML = `
         <div class="cabeceraMercado">
             <h2 id="nombreMercado">Mercado Negro</h2>
+            <p>Dinero = ${jugadorActual.dinero}
         </div>
     `;
 
@@ -128,11 +125,11 @@ function escenaMercado() {
                 <span>${productosSeleccionados.has(productoActual) ? "Retirar" : "Añadir"}</span>
             </button>
         `;
-
+        
     const boton = tarjetaProductoDiv.querySelector(`#botonSeleccionarProducto${indiceProducto}`);
     boton.addEventListener('click', () => {
       if (productosSeleccionados.has(productoActual)) {
-
+        
         productosSeleccionados.delete(productoActual);
         tarjetaProductoDiv.classList.remove('seleccionado');
 

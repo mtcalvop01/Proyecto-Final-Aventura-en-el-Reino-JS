@@ -16,7 +16,9 @@ export class Jugador {
         this.puntos = puntos_base;
         this.vidaMax = 100;
         this.vida = vidaMax;
-        this.inventario = []
+        this.inventario = [];
+        this.dineroMax = 500;
+        this.dinero = this.dineroMax;
     }
 
     /**
@@ -93,6 +95,6 @@ export class Jugador {
      * @returns {string} Información del jugador incluyendo nombre, vida, puntos, ataque e inventario.
      */
     mostrarJugador() {
-        return `Nombre: ${this.nombre}\nVida: ${this.vida}\nPuntos: ${this.puntos}\nAtaque: ${this.ataqueTotal}\nInventario: ${this.inventario.map(p => p.nombre).join(', ')}`;
+        return `Nombre: ${this.nombre}\nVida: ${this.vida}\nPuntos: ${this.puntos}\nAtaque: ${this.ataqueTotal}\nInventario: ${this.inventario.map(p => p.nombre).join(', ')}\nDinero: ${this.dinero}`;
     }
 }
